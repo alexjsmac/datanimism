@@ -3,7 +3,8 @@ var canvas,
     radialArcs = [],
     fft,
     soundFile,
-    soundSpectrum;
+    soundSpectrum
+    counter = 0;
 
 function setup() {
   colorMode(HSB,360,100,100); // set colour mode of sketch to HSB (360 degress, 100%, 100%)
@@ -27,6 +28,12 @@ function draw() {
       fill(0,0,90);
       textSize(12);
       text('Click to play', width / 2.1, height / 2);
+    } else {
+      counter++;
+      textSize(32);
+      if (counter > 100 && counter < 1200) {
+        text('1900', width / 2.1, height / 2);
+      }
     }
 
     // get the latest "amplitude" or "energy" value from the audio analysis, returned in range from 0 to 1
