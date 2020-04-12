@@ -29,17 +29,6 @@ function draw() {
       text('Click to play', width / 2.1, height / 2);
     }
 
-    // Set the volume to a range between 0 and 1.0
-    let volume = map(mouseY, 0, height, 0, 1);
-    volume = constrain(volume, 0, 1);
-    soundFile.amp(volume);
-
-    // Set the rate to a range between 0.1 and 2
-    // Changing the rate alters the pitch
-    let speed = map(mouseX, 0.1, width, 0, 2);
-    speed = constrain(speed, 0.1, 2);
-    soundFile.rate(speed);
-
     // get the latest "amplitude" or "energy" value from the audio analysis, returned in range from 0 to 1
 		var myDataVal = getNewSoundDataValue("bass"); // requesting the "amplitude data for the "bass" frequency.
 
@@ -60,9 +49,6 @@ function draw() {
   text('Datanimism', width*0.02, 50);
   textSize(20);
   text('Alex MacLean', width*0.02, 80);
-  textSize(15);
-  text('← and → to control playback speed', width*0.02, 100);
-  text('↑ and ↓ to control volume', width*0.02, 115);
 }
 
 function initRadialArcs() {
