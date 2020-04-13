@@ -28,43 +28,44 @@ function draw() {
     if(!soundFile.isPlaying()) {
       fill(0,0,90);
       textSize(12);
-      text('Click to play', width / 2.1, height / 2);
+      textAlign(CENTER);
+      text('Click to play', width / 2, height / 2);
     } else {
-      textSize(35);
+      textSize(90);
       // Svante Arrhenius mathematically quantifies the effects of carbon
       // dioxide on climate change
       if (counter > 2400 && counter < 2900) {
-        text('1896', width / 2.1, height / 2);
+        text('1896', width / 9, height / 2);
         if (particles.length < 10) particles.push(new Particle());
       }
       // WWI
       if (counter > 4800 && counter < 5300) {
-        text('1914', width / 2.1, height / 2);
+        text('1914', width / 1.325, height / 2);
         if (particles.length < 50) particles.push(new Particle());
       }
       // WWII
       if (counter > 8400 && counter < 8900) {
-        text('1939', width / 2.1, height / 2);
+        text('1939', width / 9, height / 2);
         if (particles.length < 80) particles.push(new Particle());
       }
       // The Great Smog
       if (counter > 10200 && counter < 10700) {
-        text('1952', width / 2.1, height / 2);
+        text('1952', width / 1.325, height / 2);
         if (particles.length < 100) particles.push(new Particle());
       }
       // Chernobyl
       if (counter > 15200 && counter < 15700) {
-        text('1986', width / 2.1, height / 2);
+        text('1986', width / 9, height / 2);
         if (particles.length < 130) particles.push(new Particle());
       }
       // Y2K
       if (counter > 17400 && counter < 17900) {
-        text('2000', width / 2.1, height / 2);
+        text('2000', width / 1.325, height / 2);
         if (particles.length < 160) particles.push(new Particle());
       }
       // BP Oil Spill
       if (counter > 19200 && counter < 19700) {
-        text('2010', width / 2.1, height / 2);
+        text('2010', width / 9, height / 2);
         if (particles.length < 500) particles.push(new Particle());
       }
       for (var i = 0; i < particles.length; i++) {
@@ -78,11 +79,12 @@ function draw() {
     }
   }
 
-  // Add text
+  // Information text
   textFont("Roboto Mono")
+  textAlign(LEFT);
   fill(255);
   textSize(32);
-  text('Datanimism', width*0.02, 50);
+  text('Oceanic Datanimism', width*0.02, 50);
   textSize(15);
   text('Listen to the rising sea,', width*0.02, 80);
   text('Hungry for the crust of humanity.', width*0.02, 110);
@@ -91,7 +93,7 @@ function draw() {
 
 function initRadialArcs() {
   // pass settings into constructor (arcs,minRadius,maxRadius,baseline angle,maxStrokeWidth,minHue,maxHue)
-  radialArcs[0] = new RadialArcs(40, height/4, width/2, 0, 4, 200, 360); // bass
+  radialArcs[0] = new RadialArcs(40, height/4, width/2, 0, 3, 200, 300); // bass
   radialArcs[1] = new RadialArcs(40, height/4, width/2.5, -HALF_PI, 5, 340, 360); // treb
 }
 
@@ -103,8 +105,8 @@ function updateRadialArcs() {
 }
 
 function drawRadialArcs() {
-  radialArcs[0].drawArcs(); // bass
   radialArcs[1].drawArcs(); // treb
+  radialArcs[0].drawArcs(); // bass
 }
 
 class RadialArcs { // -------------------------   RadialArcs Class -------------------------------
@@ -220,6 +222,7 @@ function analyseSound() {
   soundSpectrum = fft.analyze(); // spectrum is array of amplitudes of each frequency
 }
 
+// -------------------------  Rain Droplets  -------------------------------
 class Particle {
 
   constructor() {
