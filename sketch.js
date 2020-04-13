@@ -13,7 +13,7 @@ function setup() {
   canvas = createCanvas(windowWidth,windowHeight); // create canvas
   bgColor = color(330,0,5); // set BG colour in HSB
   background(bgColor);
-  soundFile = new p5.SoundFile("Datanimism v2.mp3"); // create soundFile from dropped audio file
+  soundFile = new p5.SoundFile("Datanimism v3.mp3"); // create soundFile from dropped audio file
   initSound(); // init sound & FFT
   canvas.mouseClicked(togglePlay); // listen for mouse click to play sound
   initRadialArcs(); // setup radial arc objects
