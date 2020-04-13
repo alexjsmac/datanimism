@@ -3,8 +3,9 @@ var canvas,
     radialArcs = [],
     fft,
     soundFile,
-    soundSpectrum
-    counter = 0;
+    soundSpectrum,
+    counter = 0,
+    particles = [];
 
 function setup() {
   colorMode(HSB,360,100,100); // set colour mode of sketch to HSB (360 degress, 100%, 100%)
@@ -29,39 +30,69 @@ function draw() {
       textSize(12);
       text('Click to play', width / 2.1, height / 2);
     } else {
-      counter++;
-      textSize(32);
-      if (counter > 100 && counter < 1200) {
-        text('1900', width / 2.1, height / 2);
+      textSize(35);
+      // Svante Arrhenius mathematically quantifies the effects of carbon
+      // dioxide on climate change
+      if (counter > 2400 && counter < 2900) {
+        text('1896', width / 2.1, height / 2);
+        if (particles.length < 10) particles.push(new Particle());
       }
+      // WWI
+      if (counter > 4800 && counter < 5300) {
+        text('1914', width / 2.1, height / 2);
+        if (particles.length < 50) particles.push(new Particle());
+      }
+      // WWII
+      if (counter > 8400 && counter < 8900) {
+        text('1939', width / 2.1, height / 2);
+        if (particles.length < 80) particles.push(new Particle());
+      }
+      // The Great Smog
+      if (counter > 10200 && counter < 10700) {
+        text('1952', width / 2.1, height / 2);
+        if (particles.length < 100) particles.push(new Particle());
+      }
+      // Chernobyl
+      if (counter > 15200 && counter < 15700) {
+        text('1986', width / 2.1, height / 2);
+        if (particles.length < 130) particles.push(new Particle());
+      }
+      // Y2K
+      if (counter > 17400 && counter < 17900) {
+        text('2000', width / 2.1, height / 2);
+        if (particles.length < 160) particles.push(new Particle());
+      }
+      // BP Oil Spill
+      if (counter > 19200 && counter < 19700) {
+        text('2010', width / 2.1, height / 2);
+        if (particles.length < 500) particles.push(new Particle());
+      }
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].display();
+      }
+      counter += 1;
     }
-
-    // get the latest "amplitude" or "energy" value from the audio analysis, returned in range from 0 to 1
-		var myDataVal = getNewSoundDataValue("bass"); // requesting the "amplitude data for the "bass" frequency.
-
-    // get a colour from our custom "getDataHSBColor" function.
-		// that function takes our data value, and returns an HSB colour created by mapping the data value
-		// independently to Hue, Saturation and Brightness
-		var myDataColor = getDataHSBColor(myDataVal);
-
-    // draw a simple ellipse, at the current position of your mouse, scaled and coloured according to the value of the latest data
-    noStroke();
-    fill(myDataColor);
-    var myEllipseSize = 200 * myDataVal;
-    ellipse(mouseX,mouseY,myEllipseSize,myEllipseSize);
+    for (var i = 0; i < particles.length; i++) {
+      particles[i].display();
+    }
   }
 
+  // Add text
+  textFont("Roboto Mono")
   fill(255);
   textSize(32);
   text('Datanimism', width*0.02, 50);
-  textSize(20);
-  text('Alex MacLean', width*0.02, 80);
+  textSize(15);
+  text('Listen to the rising sea,', width*0.02, 80);
+  text('Hungry for the crust of humanity.', width*0.02, 110);
+  text('-Alex MacLean, 2020', width*0.02, 140);
 }
 
 function initRadialArcs() {
   // pass settings into constructor (arcs,minRadius,maxRadius,baseline angle,maxStrokeWidth,minHue,maxHue)
-  radialArcs[0] = new RadialArcs(40, height/4, width/2, 0, 5, 200, 360); // bass
-  radialArcs[1] = new RadialArcs(40, height/4, width/2, -HALF_PI, 5, 340, 360); // treb
+  radialArcs[0] = new RadialArcs(40, height/4, width/2, 0, 4, 200, 360); // bass
+  radialArcs[1] = new RadialArcs(40, height/4, width/2.5, -HALF_PI, 5, 340, 360); // treb
 }
 
 function updateRadialArcs() {
@@ -167,13 +198,6 @@ class RadialArc { // -------------------------   RadialArc Class ---------------
   }
 }
 
-function getDataHSBColor(d) {
-	this.dataHue = map(d,0,1,0,360); // value moves across full 360 degrees of hue range
-	this.dataSaturation = map(d,0,1,0,100); // higher data value = more saturated colour
-	this.dataBrightness = map(d,0,1,0,100); // higher data value = brighter colour
-	return color(this.dataHue,this.dataSaturation,this.dataBrightness);
-}
-
 // -------------------------  Sound Stuff -------------------------------
 function getNewSoundDataValue(freqType) {
   return map(fft.getEnergy(freqType),0,255,0,1); // get energy from frequency, scaled from 0 to 1
@@ -194,4 +218,47 @@ function togglePlay() {
 
 function analyseSound() {
   soundSpectrum = fft.analyze(); // spectrum is array of amplitudes of each frequency
+}
+
+class Particle {
+
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = random(width);
+    this.y = random(-150, 0);
+    this.vy = random(0.1, 2);
+    this.maxy = this.y + height;
+    this.r = 0;
+    this.tr = 50;
+    this.w = random(0.1, 4);
+  }
+  update() {
+    if (this.y < this.maxy) {
+      this.y += this.vy;
+    } else {
+      this.r++;
+    }
+    if (this.r > this.tr) this.reset();
+  }
+  display() {
+    strokeWeight(this.w);
+    if (this.y < this.maxy) {
+      stroke(240,50,100);
+      push();
+      translate(this.x,this.y);
+      beginShape();
+      strokeWeight(1);
+      vertex(0,-5);
+      quadraticVertex(3, 0, 0, 1);
+      quadraticVertex(-3,0, 0, -5);
+      endShape(CLOSE);
+      pop();
+    } else {
+      stroke(70, 173, 212);
+      stroke(255, map(this.r, 0, this.tr, 255, 0));
+      ellipse(this.x, this.y, this.r, this.r*.5);
+    }
+  }
 }
