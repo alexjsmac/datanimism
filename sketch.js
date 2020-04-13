@@ -84,7 +84,7 @@ function draw() {
   textAlign(LEFT);
   fill(255);
   textSize(32);
-  text('Oceanic Datanimism', width*0.02, 50);
+  text('Oceanic \"Datanimism\"', width*0.02, 50);
   textSize(15);
   text('Listen to the rising sea,', width*0.02, 80);
   text('Hungry for the crust of humanity.', width*0.02, 110);
